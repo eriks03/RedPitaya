@@ -1,5 +1,5 @@
 {
-   guistr: "# # String gsaved with Nlview version 6.3.3  2013-08-16 bk=1.2871 VDI=33 GEI=35
+   guistr: "# # String gsaved with Nlview 6.4.10  2014-10-02 bk=1.3207 VDI=35 GEI=35 GUI=JA:1.6
 #  -string -flagsOSRD
 preplace port FCLK_CLK3 -pg 1 -y 560 -defaultsOSRD
 preplace port DDR -pg 1 -y 130 -defaultsOSRD
@@ -26,33 +26,33 @@ preplace port SPI0_MISO_I -pg 1 -y 60 -defaultsOSRD
 preplace port SPI0_MOSI_O -pg 1 -y 260 -defaultsOSRD
 preplace port SPI0_SCLK_O -pg 1 -y 200 -defaultsOSRD
 preplace port FCLK_CLK2 -pg 1 -y 540 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 1 -y 420 -defaultsOSRD
-preplace netloc processing_system7_0_ddr 1 1 1 N
-preplace netloc processing_system7_0_spi0_ss_o 1 1 1 550
-preplace netloc processing_system7_0_spi0_mosi_t 1 1 1 570
-preplace netloc processing_system7_0_fclk_reset3_n 1 1 1 610
-preplace netloc processing_system7_0_spi0_sclk_t 1 1 1 570
-preplace netloc processing_system7_0_spi0_miso_t 1 1 1 560
-preplace netloc processing_system7_0_fclk_reset2_n 1 1 1 600
-preplace netloc processing_system7_0_fclk_reset1_n 1 1 1 590
-preplace netloc processing_system7_0_spi0_ss1_o 1 1 1 560
-preplace netloc spi0_ss_i_1 1 0 2 NJ 80 540
-preplace netloc processing_system7_0_spi0_ss_t 1 1 1 560
-preplace netloc spi0_miso_i_1 1 0 2 NJ 60 550
-preplace netloc spi0_mosi_i_1 1 0 2 NJ 40 560
-preplace netloc spi0_sclk_i_1 1 0 2 NJ 20 570
+preplace inst processing_system7_0 -pg 1 -lvl 1 -y 430 -defaultsOSRD
+preplace netloc processing_system7_0_ddr 1 1 1 570
+preplace netloc processing_system7_0_spi0_ss_o 1 1 1 530
+preplace netloc processing_system7_0_spi0_mosi_t 1 1 1 580
+preplace netloc processing_system7_0_fclk_reset3_n 1 1 1 590
+preplace netloc processing_system7_0_spi0_sclk_t 1 1 1 580
+preplace netloc processing_system7_0_spi0_miso_t 1 1 1 580
+preplace netloc processing_system7_0_fclk_reset2_n 1 1 1 580
+preplace netloc processing_system7_0_fclk_reset1_n 1 1 1 570
+preplace netloc processing_system7_0_spi0_ss1_o 1 1 1 550
+preplace netloc spi0_ss_i_1 1 0 2 NJ 80 520
+preplace netloc processing_system7_0_spi0_ss_t 1 1 1 580
+preplace netloc spi0_miso_i_1 1 0 2 NJ 60 530
+preplace netloc spi0_mosi_i_1 1 0 2 NJ 40 550
+preplace netloc spi0_sclk_i_1 1 0 2 NJ 20 560
 preplace netloc processing_system7_0_spi0_mosi_o 1 1 1 560
-preplace netloc processing_system7_0_fclk_reset0_n 1 1 1 580
-preplace netloc processing_system7_0_fixed_io 1 1 1 N
+preplace netloc processing_system7_0_fclk_reset0_n 1 1 1 560
+preplace netloc processing_system7_0_fixed_io 1 1 1 580
 preplace netloc processing_system7_0_spi0_sclk_o 1 1 1 570
-preplace netloc processing_system7_0_fclk_clk0 1 0 2 140 770 570
+preplace netloc processing_system7_0_fclk_clk0 1 0 2 140 780 550
 preplace netloc processing_system7_0_spi0_miso_o 1 1 1 560
-preplace netloc processing_system7_0_fclk_clk1 1 1 1 540
-preplace netloc processing_system7_0_spi0_ss2_o 1 1 1 550
-preplace netloc processing_system7_0_fclk_clk2 1 1 1 550
-preplace netloc processing_system7_0_m_axi_gp0 1 1 1 550
-preplace netloc processing_system7_0_fclk_clk3 1 1 1 560
-levelinfo -pg 1 120 340 630
+preplace netloc processing_system7_0_fclk_clk1 1 1 1 520
+preplace netloc processing_system7_0_spi0_ss2_o 1 1 1 570
+preplace netloc processing_system7_0_fclk_clk2 1 1 1 530
+preplace netloc processing_system7_0_m_axi_gp0 1 1 1 520
+preplace netloc processing_system7_0_fclk_clk3 1 1 1 540
+levelinfo -pg 1 120 330 610
 ",
 }
 {

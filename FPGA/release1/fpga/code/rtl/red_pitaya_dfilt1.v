@@ -62,16 +62,16 @@ end
 //---------------------------------------------------------------------------------
 //  FIR
 
-wire [ 39-1: 0] bb_mult   ;
-wire [ 33-1: 0] r2_sum    ;
+reg [ 39-1: 0] bb_mult   ;
+reg [ 33-1: 0] r2_sum    ;
 reg  [ 33-1: 0] r1_reg    ;
 reg  [ 23-1: 0] r2_reg    ;
 reg  [ 32-1: 0] r01_reg   ;
 reg  [ 28-1: 0] r02_reg   ;
 
 
-assign bb_mult = $signed(adc_dat_i) * $signed(cfg_bb_r);
-assign r2_sum  = $signed(r01_reg) + $signed(r1_reg);
+//assign bb_mult = $signed(adc_dat_i) * $signed(cfg_bb_r);
+//assign r2_sum  = $signed(r01_reg) + $signed(r1_reg);
 
 always @(posedge adc_clk_i) begin
    if (adc_rstn_i == 1'b0) begin
@@ -79,12 +79,19 @@ always @(posedge adc_clk_i) begin
       r2_reg  <= 23'h0 ;
       r01_reg <= 32'h0 ;
       r02_reg <= 28'h0 ;
+      // eriks added to fix timing
+      bb_mult <= 38'h0;
+      r2_sum <= 32'h0;
    end
    else begin
       r1_reg  <= $signed(r02_reg) - $signed(r01_reg) ;
       r2_reg  <= r2_sum[33-1:10];
       r01_reg <= {adc_dat_i,18'h0};
       r02_reg <= bb_mult[39-2:10];
+      
+      //eriks added to fix timing
+      bb_mult <= $signed(adc_dat_i) * $signed(cfg_bb_r);
+      r2_sum <= $signed(r01_reg) + $signed(r1_reg);
    end
 end
 
@@ -93,20 +100,27 @@ end
 //---------------------------------------------------------------------------------
 //  IIR 1
 
-wire [ 41-1: 0] aa_mult   ;
-wire [ 49-1: 0] r3_sum    ; //24 + 25
+reg [ 41-1: 0] aa_mult   ;
+reg [ 49-1: 0] r3_sum    ; //24 + 25
 reg  [ 23-1: 0] r3_reg    ;
 
-
-assign aa_mult = $signed(r3_reg) * $signed(cfg_aa_r);
-assign r3_sum  = $signed({r2_reg,25'h0}) + $signed({r3_reg,25'h0}) - $signed(aa_mult[41-1:0]);
+//assign aa_mult = $signed(r3_reg) * $signed(cfg_aa_r);
+//assign r3_sum  = $signed({r2_reg,25'h0}) + $signed({r3_reg,25'h0}) - $signed(aa_mult[41-1:0]);
 
 always @(posedge adc_clk_i) begin
    if (adc_rstn_i == 1'b0) begin
       r3_reg  <= 23'h0 ;
+      
+      //eriks added to fix timing
+      aa_mult <= 40'h0;
+      r3_sum <= 48'h0;
    end
    else begin
-      r3_reg  <= r3_sum[49-2:25] ;
+      r3_reg  <= r3_sum[49-2:25];
+      
+      //eriks added to fix timing
+      aa_mult <= $signed(r3_reg) * $signed(cfg_aa_r);
+      r3_sum  <= $signed({r2_reg,25'h0}) + $signed({r3_reg,25'h0}) - $signed(aa_mult[41-1:0]);
    end
 end
 
@@ -115,23 +129,31 @@ end
 //---------------------------------------------------------------------------------
 //  IIR 2
 
-wire [ 40-1: 0] pp_mult   ;
-wire [ 16-1: 0] r4_sum    ;
+reg [ 40-1: 0] pp_mult   ;
+reg [ 16-1: 0] r4_sum    ;
 reg  [ 15-1: 0] r4_reg    ;
 reg  [ 15-1: 0] r3_shr    ;
 
 
-assign pp_mult = $signed(r4_reg) * $signed(cfg_pp_r);
-assign r4_sum  = $signed(r3_shr) + $signed(pp_mult[40-2:16]);
+//assign pp_mult = $signed(r4_reg) * $signed(cfg_pp_r);
+//assign r4_sum  = $signed(r3_shr) + $signed(pp_mult[40-2:16]);
 
 always @(posedge adc_clk_i) begin
    if (adc_rstn_i == 1'b0) begin
       r3_shr <= 15'h0 ;
       r4_reg <= 15'h0 ;
+      
+      //eriks added to fix timing
+      pp_mult <= 39'h0;
+      r4_sum <= 15'h0;
    end
    else begin
       r3_shr <= r3_reg[23-1:8] ;
       r4_reg <= r4_sum[16-2:0] ;
+      
+      //eriks added to fix timing
+      pp_mult <= $signed(r4_reg) * $signed(cfg_pp_r);
+      r4_sum  <= $signed(r3_shr) + $signed(pp_mult[40-2:16]);
    end
 end
 
@@ -141,19 +163,23 @@ end
 //---------------------------------------------------------------------------------
 //  Scaling
 
-wire [ 40-1: 0] kk_mult   ;
+reg [ 40-1: 0] kk_mult   ;
 reg  [ 15-1: 0] r4_reg_r  ;
 reg  [ 15-1: 0] r4_reg_rr ;
 reg  [ 14-1: 0] r5_reg    ;
 
 
-assign kk_mult = $signed(r4_reg_rr) * $signed(cfg_kk_r);
+//assign kk_mult = $signed(r4_reg_rr) * $signed(cfg_kk_r);
 
 always @(posedge adc_clk_i) begin
    if (adc_rstn_i == 1'b0) begin
       r4_reg_r  <= 15'h0 ;
       r4_reg_rr <= 15'h0 ;
       r5_reg    <= 14'h0 ;
+      
+      //eriks added to fix timing
+      kk_mult <= 39'h0;
+      
    end
    else begin
       r4_reg_r  <= r4_reg   ;
@@ -165,14 +191,12 @@ always @(posedge adc_clk_i) begin
          r5_reg <= 14'h2000 ;
       else
          r5_reg <= kk_mult[24+14-1:24];
+         
+      //eriks added to fix timing
+      kk_mult <= $signed(r4_reg_rr) * $signed(cfg_kk_r);
    end
 end
 
 assign adc_dat_o = r5_reg ;
 
-
-
-
-
 endmodule
-
